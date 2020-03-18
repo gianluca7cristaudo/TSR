@@ -1,0 +1,31 @@
+create table Autore (
+nome varchar(30),
+cognome varchar(30),
+email varchar(30) primary key,
+affiliazione varchar(50),
+password varchar(50)
+);
+
+create table Articolo (
+titolo varchar(50) primary key,
+abstract varchar(500),
+dimensione integer,
+nome_file varchar(100),
+stato varchar(20)
+);
+
+create table AutoreArticolo (
+titolo varchar(50) references Articolo(titolo),
+email varchar(30) references Autore(email),
+primary key(titolo, email)
+);
+
+insert into Autore values("Samuele", "Gulino", "samuele.gulino@gmail.com", "gold", "blabla");
+insert into Autore values("Mattia", "Gulino", "mattia.gulino@gmail.com", "gold", "wii");
+insert into Articolo values("Zelda", "bello", 4, "Zelda.pdf", "accettato");
+insert into AutoreArticolo values("Zelda", "samuele.gulino@gmail.com");
+insert into AutoreArticolo values("Zelda", "mattia.gulino@gmail.com");
+insert into Articolo values("Pokemon", "mostru", 4, "Pokemon.pdf", "candidato_accettazione");
+insert into AutoreArticolo values("Pokemon", "samuele.gulino@gmail.com");
+
+select Articolo.* from Autore join AutoreArticolo on Autore.email = AutoreArticolo.email join Articolo on AutoreArticolo.titolo = Articolo.titolo where Autore.email = "samuele.gulino@gmail.com";
